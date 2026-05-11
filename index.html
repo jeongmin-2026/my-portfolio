@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>내 포트폴리오</title>
+    <title>포트폴리오</title>
     <style>
         * {
             margin: 0;
@@ -11,182 +11,364 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-            color: #fff;
-            line-height: 1.6;
-            min-height: 100vh;
+        html {
+            scroll-behavior: smooth;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* 섹션 공통 스타일 */
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             padding: 60px 20px;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 80px;
-            animation: fadeIn 1s ease-out;
+        /* 표지 */
+        .cover {
+            background: linear-gradient(135deg, #000 0%, #1a1a1a 100%);
+            flex-direction: column;
         }
 
-        h1 {
-            font-size: 4rem;
+        .cover img {
+            max-width: 90%;
+            max-height: 80vh;
+            object-fit: contain;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(255,255,255,0.1);
+        }
+
+        /* 소개 섹션 */
+        .intro {
+            background: #0f0f0f;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .intro h1 {
+            font-size: 3.5rem;
             font-weight: 300;
-            letter-spacing: -2px;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #ffffff 0%, #888888 100%);
+            letter-spacing: -1px;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #fff 0%, #888 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .subtitle {
+        .intro p {
             font-size: 1.2rem;
-            color: #888;
-            font-weight: 300;
-            letter-spacing: 2px;
+            color: #999;
+            max-width: 600px;
+            line-height: 1.8;
+            margin-bottom: 20px;
         }
 
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 12px;
-            background: #222;
-            cursor: pointer;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            animation: slideUp 0.6s ease-out backwards;
-        }
-
-        .gallery-item:nth-child(1) { animation-delay: 0.1s; }
-        .gallery-item:nth-child(2) { animation-delay: 0.2s; }
-        .gallery-item:nth-child(3) { animation-delay: 0.3s; }
-        .gallery-item:nth-child(4) { animation-delay: 0.4s; }
-        .gallery-item:nth-child(5) { animation-delay: 0.5s; }
-        .gallery-item:nth-child(6) { animation-delay: 0.6s; }
-
-        .gallery-item:hover {
-            transform: translateY(-8px);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: auto;
-            display: block;
-            transition: transform 0.4s ease;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.05);
-        }
-
-        .caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 20px;
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
-        }
-
-        .gallery-item:hover .caption {
-            transform: translateY(0);
-        }
-
-        footer {
-            text-align: center;
-            padding: 40px 20px;
+        .scroll-hint {
+            margin-top: 50px;
             color: #666;
             font-size: 0.9rem;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        /* 프로젝트 썸네일 그리드 */
+        .projects-grid {
+            background: #0a0a0a;
+            flex-direction: column;
         }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .projects-grid h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 60px;
+            text-align: center;
         }
 
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        .project-card {
+            position: relative;
+            cursor: pointer;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.4s ease;
+            background: #1a1a1a;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .project-info {
+            padding: 25px;
+        }
+
+        .project-info h3 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+        }
+
+        .project-info p {
+            color: #888;
+            font-size: 0.95rem;
+        }
+
+        /* 개별 프로젝트 상세 섹션 */
+        .project-detail {
+            background: #0f0f0f;
+            flex-direction: column;
+            padding: 80px 20px;
+        }
+
+        .project-detail h2 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+
+        /* 수평 스크롤 갤러리 */
+        .scroll-gallery {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 20px 0;
+            max-width: 100%;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .scroll-gallery::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .scroll-gallery::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-radius: 4px;
+        }
+
+        .scroll-gallery::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 4px;
+        }
+
+        .scroll-gallery::-webkit-scrollbar-thumb:hover {
+            background: #666;
+        }
+
+        .gallery-item {
+            flex: 0 0 auto;
+            scroll-snap-align: center;
+        }
+
+        .gallery-item img {
+            height: 70vh;
+            width: auto;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .back-to-top {
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .back-to-top a {
+            color: #888;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 15px 30px;
+            border: 1px solid #333;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .back-to-top a:hover {
+            border-color: #666;
+            color: #fff;
+        }
+
+        /* 반응형 */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
+            .intro h1 {
+                font-size: 2rem;
             }
             
-            .gallery {
+            .project-detail h2 {
+                font-size: 1.8rem;
+            }
+            
+            .grid {
                 grid-template-columns: 1fr;
-                gap: 20px;
+            }
+            
+            .gallery-item img {
+                height: 50vh;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>내 포트폴리오</h1>
-            <p class="subtitle">DESIGN PORTFOLIO 2024</p>
-        </header>
+    <!-- 표지 1 -->
+    <section class="cover">
+        <img src="images/cover-1.png" alt="표지 1">
+    </section>
 
-        <div class="gallery">
-            <!-- 여기에 이미지를 추가하세요 -->
-            <div class="gallery-item">
-                <img src="images/portfolio-1.png" alt="Project 1">
-                <div class="caption">
+    <!-- 표지 2 -->
+    <section class="cover">
+        <img src="images/cover-2.png" alt="표지 2">
+    </section>
+
+    <!-- 소개 -->
+    <section class="intro" id="intro">
+        <h1>안녕하세요,<br>디자이너 OOO입니다</h1>
+        <p>
+            여기에 자기소개를 작성하세요.<br>
+            나의 디자인 철학, 경험, 관심사 등을<br>
+            간단하게 적어보세요.
+        </p>
+        <div class="scroll-hint">↓ 아래로 스크롤하여 프로젝트 보기</div>
+    </section>
+
+    <!-- 프로젝트 썸네일 그리드 -->
+    <section class="projects-grid" id="projects">
+        <h2>Projects</h2>
+        <div class="grid">
+            <a href="#project1" class="project-card">
+                <img src="images/project1/thumb.png" alt="프로젝트 1">
+                <div class="project-info">
                     <h3>프로젝트 1</h3>
+                    <p>프로젝트 설명을 여기에 작성하세요</p>
                 </div>
-            </div>
+            </a>
 
-            <div class="gallery-item">
-                <img src="images/portfolio-2.png" alt="Project 2">
-                <div class="caption">
+            <a href="#project2" class="project-card">
+                <img src="images/project2/thumb.png" alt="프로젝트 2">
+                <div class="project-info">
                     <h3>프로젝트 2</h3>
+                    <p>프로젝트 설명을 여기에 작성하세요</p>
                 </div>
-            </div>
+            </a>
 
-            <div class="gallery-item">
-                <img src="images/portfolio-3.png" alt="Project 3">
-                <div class="caption">
+            <a href="#project3" class="project-card">
+                <img src="images/project3/thumb.png" alt="프로젝트 3">
+                <div class="project-info">
                     <h3>프로젝트 3</h3>
+                    <p>프로젝트 설명을 여기에 작성하세요</p>
                 </div>
-            </div>
+            </a>
 
-            <div class="gallery-item">
-                <img src="images/portfolio-4.png" alt="Project 4">
-                <div class="caption">
+            <a href="#project4" class="project-card">
+                <img src="images/project4/thumb.png" alt="프로젝트 4">
+                <div class="project-info">
                     <h3>프로젝트 4</h3>
+                    <p>프로젝트 설명을 여기에 작성하세요</p>
                 </div>
-            </div>
-
-            <!-- 더 추가하려면 위 블록을 복사하세요 -->
+            </a>
         </div>
+    </section>
 
-        <footer>
-            <p>© 2024 My Portfolio. All rights reserved.</p>
-        </footer>
-    </div>
+    <!-- 프로젝트 1 상세 -->
+    <section class="project-detail" id="project1">
+        <h2>프로젝트 1</h2>
+        <div class="scroll-gallery">
+            <div class="gallery-item"><img src="images/project1/1.png" alt="Project 1 - 1"></div>
+            <div class="gallery-item"><img src="images/project1/2.png" alt="Project 1 - 2"></div>
+            <div class="gallery-item"><img src="images/project1/3.png" alt="Project 1 - 3"></div>
+            <div class="gallery-item"><img src="images/project1/4.png" alt="Project 1 - 4"></div>
+            <div class="gallery-item"><img src="images/project1/5.png" alt="Project 1 - 5"></div>
+            <div class="gallery-item"><img src="images/project1/6.png" alt="Project 1 - 6"></div>
+            <div class="gallery-item"><img src="images/project1/7.png" alt="Project 1 - 7"></div>
+            <div class="gallery-item"><img src="images/project1/8.png" alt="Project 1 - 8"></div>
+            <div class="gallery-item"><img src="images/project1/9.png" alt="Project 1 - 9"></div>
+            <!-- 이미지가 더 있으면 계속 추가 -->
+        </div>
+        <div class="back-to-top">
+            <a href="#projects">← 프로젝트 목록으로</a>
+        </div>
+    </section>
+
+    <!-- 프로젝트 2 상세 -->
+    <section class="project-detail" id="project2">
+        <h2>프로젝트 2</h2>
+        <div class="scroll-gallery">
+            <div class="gallery-item"><img src="images/project2/1.png" alt="Project 2 - 1"></div>
+            <div class="gallery-item"><img src="images/project2/2.png" alt="Project 2 - 2"></div>
+            <div class="gallery-item"><img src="images/project2/3.png" alt="Project 2 - 3"></div>
+            <div class="gallery-item"><img src="images/project2/4.png" alt="Project 2 - 4"></div>
+            <div class="gallery-item"><img src="images/project2/5.png" alt="Project 2 - 5"></div>
+            <div class="gallery-item"><img src="images/project2/6.png" alt="Project 2 - 6"></div>
+            <div class="gallery-item"><img src="images/project2/7.png" alt="Project 2 - 7"></div>
+            <div class="gallery-item"><img src="images/project2/8.png" alt="Project 2 - 8"></div>
+            <div class="gallery-item"><img src="images/project2/9.png" alt="Project 2 - 9"></div>
+        </div>
+        <div class="back-to-top">
+            <a href="#projects">← 프로젝트 목록으로</a>
+        </div>
+    </section>
+
+    <!-- 프로젝트 3 상세 -->
+    <section class="project-detail" id="project3">
+        <h2>프로젝트 3</h2>
+        <div class="scroll-gallery">
+            <div class="gallery-item"><img src="images/project3/1.png" alt="Project 3 - 1"></div>
+            <div class="gallery-item"><img src="images/project3/2.png" alt="Project 3 - 2"></div>
+            <div class="gallery-item"><img src="images/project3/3.png" alt="Project 3 - 3"></div>
+            <div class="gallery-item"><img src="images/project3/4.png" alt="Project 3 - 4"></div>
+            <div class="gallery-item"><img src="images/project3/5.png" alt="Project 3 - 5"></div>
+            <div class="gallery-item"><img src="images/project3/6.png" alt="Project 3 - 6"></div>
+            <div class="gallery-item"><img src="images/project3/7.png" alt="Project 3 - 7"></div>
+            <div class="gallery-item"><img src="images/project3/8.png" alt="Project 3 - 8"></div>
+            <div class="gallery-item"><img src="images/project3/9.png" alt="Project 3 - 9"></div>
+        </div>
+        <div class="back-to-top">
+            <a href="#projects">← 프로젝트 목록으로</a>
+        </div>
+    </section>
+
+    <!-- 프로젝트 4 상세 -->
+    <section class="project-detail" id="project4">
+        <h2>프로젝트 4</h2>
+        <div class="scroll-gallery">
+            <div class="gallery-item"><img src="images/project4/1.png" alt="Project 4 - 1"></div>
+            <div class="gallery-item"><img src="images/project4/2.png" alt="Project 4 - 2"></div>
+            <div class="gallery-item"><img src="images/project4/3.png" alt="Project 4 - 3"></div>
+            <div class="gallery-item"><img src="images/project4/4.png" alt="Project 4 - 4"></div>
+            <div class="gallery-item"><img src="images/project4/5.png" alt="Project 4 - 5"></div>
+            <div class="gallery-item"><img src="images/project4/6.png" alt="Project 4 - 6"></div>
+            <div class="gallery-item"><img src="images/project4/7.png" alt="Project 4 - 7"></div>
+            <div class="gallery-item"><img src="images/project4/8.png" alt="Project 4 - 8"></div>
+            <div class="gallery-item"><img src="images/project4/9.png" alt="Project 4 - 9"></div>
+        </div>
+        <div class="back-to-top">
+            <a href="#projects">← 프로젝트 목록으로</a>
+        </div>
+    </section>
+
 </body>
 </html>
